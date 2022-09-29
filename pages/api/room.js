@@ -1,3 +1,4 @@
+import RenderResult from "next/dist/server/render-result";
 import { checkToken } from "../../backendLibs/checkToken";
 import { readChatRoomsDB } from "../../backendLibs/dbLib";
 
@@ -10,6 +11,13 @@ export default function roomRoute(req, res) {
     });
   }
   const chatrooms = readChatRoomsDB();
-
-  //create room data and return response
+  const result = [];
+  for (const room of chatrooms) {
+    result.push({
+      roomId: room.roomId,
+      roomName: room.roomName,
+    });
+    //create room data and return response
+  }
+  return res.json({ ok: true, rooms: result });
 }
